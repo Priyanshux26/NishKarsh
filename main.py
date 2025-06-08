@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from transformers import pipeline
-from .bias_analysis import analyze_and_summarize, extract_article_info_fallback
+from bias_analysis import analyze_and_summarize, extract_article_info_fallback
 
 import uvicorn
 import numpy as np
