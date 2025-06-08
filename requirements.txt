@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+transformers
+torch
+numpy
+requests
+beautifulsoup4
+readability-lxml
+tldextract
+scikit-learn
+jinja2
