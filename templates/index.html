@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Bias Bulletin | NishKarsh: A Lens to Unbiased News</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --newspaper-bg: #f7f5f2;
+  --headline: #1a1a1a;
+  --serif: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
+  --sans: 'Inter', Arial, sans-serif;
+  --divider: #d2cfc9;
+  --accent: #b22222;
+  --left: #b22222;
+  --right: #234fa1;
+  --center: #2e7d32;
+  --box: #fffdfa;
+  --shadow: 0 2px 12px rgba(0,0,0,0.03);
+}
+body {
+  background: var(--newspaper-bg);
+  color: var(--headline);
+  font-family: var(--serif);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+header {
+  width: 100%;
+  border-bottom: 3px solid var(--divider);
+  background: var(--box);
+  box-shadow: var(--shadow);
+  padding: 32px 0 16px 0;
+  text-align: center;
+  margin-bottom: 32px;
+}
+header .masthead {
+  font-family: var(--serif);
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--headline);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+header .subhead {
+  font-family: var(--sans);
+  color: var(--accent);
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}
+.main-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--box);
+  box-shadow: var(--shadow);
+  border-radius: 0 0 6px 6px;
+  padding: 32px 30px 40px 30px;
+  border: 1.5px solid var(--divider);
+}
+form {
+  margin-bottom: 32px;
+}
+label {
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 7px;
+}
+textarea, input[type="text"] {
+  width: 100%;
+  background: #f3f1ed;
+  border: 1.5px solid var(--divider);
+  border-radius: 5px;
+  padding: 11px 14px;
+  font-size: 1rem;
+  color: var(--headline);
+  margin-bottom: 18px;
+  font-family: var(--sans);
+  transition: border 0.2s;
+}
+textarea:focus, input[type="text"]:focus {
+  outline: none;
+  border: 1.5px solid var(--accent);
+  background: #fff;
+}
+button {
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.08rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 13px 0;
+  width: 100%;
+  transition: background 0.2s;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 4px #b222221a;
+}
+button:hover {
+  background: #8a1a1a;
+}
+#loader {
+  display: none;
+  text-align: center;
+  margin: 30px 0;
+}
+.lds-dual-ring {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 4px solid var(--accent);
+  border-color: var(--accent) transparent var(--divider) transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--divider);
+  margin-bottom: 10px;
+  margin-top: 32px;
+  color: var(--headline);
+  letter-spacing: 1px;
+  padding-bottom: 3px;
+}
+#summary {
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: #444;
+  font-family: var(--serif);
+  margin-bottom: 30px;
+  margin-top: 8px;
+}
+.bias-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 32px 0 18px 0;
+  font-family: var(--serif);
+  background: none;
+}
+.bias-table th, .bias-table td {
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 1.5px solid var(--divider);
+  font-size: 1.08rem;
+}
+.bias-table th {
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 1.09rem;
+  font-weight: 700;
+  background: #fffdfa;
+  letter-spacing: 0.5px;
+}
+.bias-table tr:last-child td { border-bottom: none; }
+.leftist { color: var(--left); font-weight: 700; }
+.rightist { color: var(--right); font-weight: 700; }
+.centrist { color: var(--center); font-weight: 700; }
+.bar-bg {
+  display: inline-block;
+  vertical-align: middle;
+  background: #e3e0da;
+  border-radius: 3px;
+  width: 110px;
+  height: 10px;
+  margin: 0 10px 0 0;
+  position: relative;
+}
+.bar {
+  height: 100%;
+  border-radius: 3px;
+  position: absolute;
+  left: 0; top: 0;
+}
+.bar.leftist { background: var(--left); }
+.bar.rightist { background: var(--right); }
+.bar.centrist { background: var(--center); }
+.editor-note {
+  font-family: var(--sans);
+  font-size: 1.09rem;
+  margin: 18px 0 10px 0;
+  padding: 12px 18px;
+  border-left: 4px solid var(--accent);
+  background: #fffdfa;
+  color: #222;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px #b2222208;
+}
+.editor-note.positive { border-color: var(--center); color: var(--center);}
+.editor-note.negative { border-color: var(--left); color: var(--left);}
+.final-conclusion {
+  display: block;
+  margin: 38px auto 0 auto;
+  padding: 16px 36px;
+  border-radius: 30px;
+  font-family: var(--sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  background: linear-gradient(90deg, #fffdfa 60%, #f7f5f2 100%);
+  border: 2.5px solid var(--accent);
+  color: var(--accent);
+  text-align: center;
+  box-shadow: 0 2px 18px #b2222212;
+  width: fit-content;
+}
+.final-conclusion.leftist { border-color: var(--left); color: var(--left);}
+.final-conclusion.rightist { border-color: var(--right); color: var(--right);}
+.final-conclusion.centrist { border-color: var(--center); color: var(--center);}
+@media (max-width: 700px) {
+  .main-wrap { padding: 18px 4vw 32px 4vw; }
+  .bias-table th, .bias-table td { font-size: 1rem; }
+  .section-title { font-size: 1.18rem; }
+  .final-conclusion { font-size: 1.02rem; }
+}
+</style>
+</head>
+<body>
+  <header>
+    <div class="masthead">NishKarsh</div>
+    <div class="subhead">A Lens to Unbiased News</div>
+  </header>
+  <div class="main-wrap">
+    <form id="analyzeForm" autocomplete="off">
+      <label for="article">News Article</label>
+      <textarea id="article" placeholder="Paste news article here..." required rows="7"></textarea>
+      <label for="source">Source (e.g., NDTV, OpIndia)</label>
+      <input type="text" id="source" placeholder="Enter news source" required />
+      <button type="submit">Analyze</button>
+    </form>
+    <div id="loader">
+      <div class="lds-dual-ring"></div>
+      <div style="margin-top:10px;color:var(--accent);font-weight:600;letter-spacing:1px;font-family:var(--sans);">Analyzing...</div>
+    </div>
+    <div id="results">
+      <div class="section-title">Neutral Summary</div>
+      <div id="summary"></div>
+      <div class="section-title">Bias Analysis Report</div>
+      <div id="editorNotes"></div>
+      <table class="bias-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Leftist</th>
+            <th>Rightist</th>
+            <th>Centrist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TF-IDF</td>
+            <td id="tfidf-left"></td>
+            <td id="tfidf-right"></td>
+            <td id="tfidf-center"></td>
+          </tr>
+          <tr>
+            <td>RoBERTa Similarity</td>
+            <td id="robertaSim-left"></td>
+            <td id="robertaSim-right"></td>
+            <td id="robertaSim-center"></td>
+          </tr>
+          <tr>
+            <td>Source Weights</td>
+            <td id="source-left"></td>
+            <td id="source-right"></td>
+            <td id="source-center"></td>
+          </tr>
+          <tr>
+            <td>Final Score</td>
+            <td id="final-left"></td>
+            <td id="final-right"></td>
+            <td id="final-center"></td>
+          </tr>
+        </tbody>
+      </table>
+      <span id="finalConclusion" class="final-conclusion"></span>
+    </div>
+  </div>
+  <script>
+    function showLoader(show) {
+      document.getElementById("loader").style.display = show ? "block" : "none";
+    }
+    document.getElementById("analyzeForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const article = document.getElementById("article").value.trim();
+      const source = document.getElementById("source").value.trim();
+      if (!article || !source) return;
+      document.getElementById("results").style.opacity = 0;
+      showLoader(true);
+      try {
+        // MOCK DATA for demo
+        await new Promise(res => setTimeout(res, 1100));
+        const data = {
+          summary: "Congress general secretary Jairam Ramesh said the pain, distress, and agony of the people of Manipur continues unabated. Five districts of Imphal West, Imphal East, Thoubal, Katching, and Bishnupur in Manipur have been rocked by violence in the last 24 hours.",
+          bias_report: {
+            RoBERTa_Model: { "Predicted Label": "Rightist", "Confidence": 98.8 },
+            TFIDF_Scores: { Leftist: 0.0, Rightist: 1.0, Centrist: 0.0 },
+            RoBERTa_Sim: { Leftist: -0.2542, Rightist: -0.1504, Centrist: -0.2307 },
+            Source_Weights: { Leftist: 0.0, Rightist: 1.0, Centrist: 0.0 },
+            Final_Scores: { Leftist: -0.1017, Rightist: 0.5398, Centrist: -0.0923 },
+            Sentiment_Influence: -0.9871,
+            "Final Conclusion": "Rightist"
+          }
+        };
+        document.getElementById("summary").innerText = data.summary;
+        setTableCell("tfidf-left", data.bias_report.TFIDF_Scores.Leftist, "leftist");
+        setTableCell("tfidf-right", data.bias_report.TFIDF_Scores.Rightist, "rightist");
+        setTableCell("tfidf-center", data.bias_report.TFIDF_Scores.Centrist, "centrist");
+        setTableCell("robertaSim-left", data.bias_report.RoBERTa_Sim.Leftist, "leftist", true);
+        setTableCell("robertaSim-right", data.bias_report.RoBERTa_Sim.Rightist, "rightist", true);
+        setTableCell("robertaSim-center", data.bias_report.RoBERTa_Sim.Centrist, "centrist", true);
+        setTableCell("source-left", data.bias_report.Source_Weights.Leftist, "leftist");
+        setTableCell("source-right", data.bias_report.Source_Weights.Rightist, "rightist");
+        setTableCell("source-center", data.bias_report.Source_Weights.Centrist, "centrist");
+        setTableCell("final-left", data.bias_report.Final_Scores.Leftist, "leftist", true);
+        setTableCell("final-right", data.bias_report.Final_Scores.Rightist, "rightist", true);
+        setTableCell("final-center", data.bias_report.Final_Scores.Centrist, "centrist", true);
+
+        // Editorial notes for RoBERTa Model Prediction & Sentiment
+        const notes = [];
+        notes.push(
+          `<div class="editor-note"><b>RoBERTa Model Prediction:</b> <span class="rightist">${data.bias_report.RoBERTa_Model["Predicted Label"]}</span> <b>(${data.bias_report.RoBERTa_Model.Confidence.toFixed(2)}%)</b></div>`
+        );
+        const sentScore = data.bias_report.Sentiment_Influence;
+        notes.push(
+          `<div class="editor-note${sentScore > 0 ? ' positive' : ' negative'}"><b>Sentiment Influence:</b> ${sentScore.toFixed(4)} &mdash; ` +
+          (sentScore > 0
+            ? "Sentiment supports the predicted bias direction."
+            : "Sentiment diverges from the predicted bias direction.") +
+          `</div>`
+        );
+        document.getElementById("editorNotes").innerHTML = notes.join('');
+
+        // Final conclusion
+        const conclusion = data.bias_report["Final Conclusion"];
+        const finalDiv = document.getElementById("finalConclusion");
+        let badgeClass = "centrist", badgeText = "Centrist";
+        if (conclusion === "Leftist") badgeClass = "leftist", badgeText = "Leftist";
+        else if (conclusion === "Rightist") badgeClass = "rightist", badgeText = "Rightist";
+        finalDiv.className = "final-conclusion " + badgeClass;
+        finalDiv.innerText = `Final Conclusion: ${badgeText}`;
+
+        showLoader(false);
+        setTimeout(() => {
+          document.getElementById("results").style.opacity = 1;
+        }, 80);
+
+      } catch (err) {
+        showLoader(false);
+        alert("Error analyzing article. Please try again.");
+        console.error(err);
+      }
+    });
+    function setTableCell(id, value, biasClass, allowNeg) {
+      const cell = document.getElementById(id);
+      let absVal = Math.abs(value);
+      let percent = Math.max(0, Math.min(100, absVal * 100));
+      let bar = `<span class="bar-bg"><span class="bar ${biasClass}" style="width:${percent}%;"></span></span>`;
+      let valText = (allowNeg ? value : absVal).toFixed(4);
+      cell.innerHTML = bar + `<span class="${biasClass}" style="margin-left:8px;">${valText}</span>`;
+    }
+  </script>
+</body>
+</html>
